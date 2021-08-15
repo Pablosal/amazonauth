@@ -2,7 +2,8 @@ import React, { useContext } from "react";
 import { useState } from "react";
 import {AccountContext} from "./account"
 const RecoverPassword = () => {
-const {recoverPassword} = useContext(AccountContext)
+const {recoverPassword,user} = useContext(AccountContext)
+const [email,setEmail] = useState("")
   const [newPassword, setNewPassword] = useState("");
   const [newPassword2, setNewPassword2] = useState("");
   const [correctCode, setCorrectCode] = useState(false);
@@ -10,7 +11,9 @@ const {recoverPassword} = useContext(AccountContext)
   return (
     <>
     <h1>CODIGO: </h1>
-      <button onClick={recoverPassword}>Recuperar Password</button>
+    Ingresa tu Email
+    <input type="email" value={email} name="email" onChange={(e)=>setEmail(e.target.value)} />
+      <button onClick={()=>recoverPassword(email)}>Recuperar Password</button>
       {
           correctCode &&
         <form>

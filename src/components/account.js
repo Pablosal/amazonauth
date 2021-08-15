@@ -25,8 +25,12 @@ const Account = (props) => {
       }
     });
   };
-  const recoverPassword = () => {
-    user.forgotPassword({
+  const recoverPassword = (Username) => {
+    const cognitouser = new CognitoUser({
+      Username,
+      Pool,
+    });
+    cognitouser.forgotPassword({
       onSuccess: function (data) {
         // successfully initiated reset password request
         console.log("CodeDeliveryData from forgotPassword: " + data);
@@ -36,7 +40,7 @@ const Account = (props) => {
       },
         //Optional automatic callback
         inputVerificationCode: function(data) {
-          console.log('Code sent to: ' + data);
+          console.log({data});
          
     }});
   };
