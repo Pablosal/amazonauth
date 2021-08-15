@@ -13,7 +13,7 @@ const Account = (props) => {
   const getSession = async () => {
     return await new Promise((res, rej) => {
       const user = Pool.getCurrentUser();
-      setUser(user)
+      setUser(user);
       console.log(user);
       if (user) {
         user.getSession((err, session) => {
@@ -38,11 +38,23 @@ const Account = (props) => {
       onFailure: function (err) {
         alert(err.message || JSON.stringify(err));
       },
-        //Optional automatic callback
-        inputVerificationCode: function(data) {
-          console.log({data});
-         
-    }});
+      //Optional automatic callback
+      inputVerificationCode: function (data) {
+        console.log({ data });
+      },
+    });
+  };
+  const resetPassword = (code,password) => {
+    const user = Pool.getCurrentUser();
+    user.confirmPassword(code, password, {
+      onSuccess: function (data) {
+        // successfully initiated reset password request
+        console.log("well document, password changed");
+      },
+      onFailure: function (err) {
+        alert(err.message || JSON.stringify(err));
+      },
+    });
   };
   const authenticate = async (Username, Password) => {
     return await new Promise((res, rej) => {
@@ -69,7 +81,7 @@ const Account = (props) => {
   };
   return (
     <AccountContext.Provider
-      value={{ authenticate, getSession, logged,user, recoverPassword }}
+      value={{ authenticate, getSession, logged, user, recoverPassword,resetPassword }}
     >
       {props.children}
     </AccountContext.Provider>
