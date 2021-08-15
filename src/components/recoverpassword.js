@@ -30,7 +30,7 @@ const RecoverPassword = () => {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            resetPassword(code, password);
+            resetPassword(code, newPassword);
           }}
         >
           <h1>Nueva Contraseña</h1>
