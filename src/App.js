@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import PrivateRoute from "./components/privateRoute";
 import SecretPage from "./pages/SecretPage";
 import PublicPage from "./pages/PublicPage";
+import RecoverPassword from "./components/recoverpassword";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Switch>
           <PrivateRoute component={SecretPage} path="/secreto" exact />
           <Route component={PublicPage} path="/" exact />
+          <Route component={RecoverPassword} path="/recoverpassword" exact />
         </Switch>
       </Router>
     </div>

@@ -27,7 +27,7 @@ const Login = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <input type="submit" value="Registrarse" />
+        <input type="submit" value="Logeate" />
       </form>
     </div>
   );

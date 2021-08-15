@@ -7,6 +7,7 @@ const PublicPage = () => {
   return (
     <header className="App-header">
       <Link to="/secreto">Pagina Secreta</Link>
+      <Link to="/recoverpassword">Forgot Password?</Link>
       <Status></Status>
       <SignUp />
       <Login></Login>
