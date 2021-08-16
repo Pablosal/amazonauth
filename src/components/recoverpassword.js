@@ -6,31 +6,47 @@ const RecoverPassword = () => {
   const [email, setEmail] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [newPassword2, setNewPassword2] = useState("");
-  const [correctCode, setCorrectCode] = useState(false);
-  const [code, setCode] = useState(false);
-  return (
-    <>
-      <h1>
-        CODIGO:
+  const [code, setCode] = useState("");
+  const [step, setStep] = useState(1);
+  if (step === 1) {
+    return (
+      <>
+        Ingresa tu Email
+        <input
+          type="email"
+          value={email}
+          name="email"
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <button
+          onClick={() => {
+            recoverPassword(email.toLowerCase());
+            setStep(2);
+          }}
+        >
+          Recuperar Password
+        </button>
+      </>
+    );
+  }
+  if (step === 2) {
+    return (
+      <>
+        <h1>CODIGO:</h1>
         <input
           type="text"
           value={code}
           onChange={(e) => setCode(e.target.value)}
         />
-      </h1>
-      Ingresa tu Email
-      <input
-        type="email"
-        value={email}
-        name="email"
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <button onClick={() => recoverPassword(email)}>Recuperar Password</button>
-      {correctCode && (
+
         <form
           onSubmit={(e) => {
-            e.preventDefault();
-            resetPassword(code, newPassword);
+            if (newPassword === newPassword2) {
+              e.preventDefault();
+              resetPassword(code, newPassword);
+            } else {
+              alert("Las contraseñas no son iguales");
+            }
           }}
         >
           <h1>Nueva Contraseña</h1>
@@ -56,9 +72,9 @@ const RecoverPassword = () => {
           </div>
           <input type="submit" />
         </form>
-      )}
-    </>
-  );
+      </>
+    );
+  }
 };
 
 export default RecoverPassword;
