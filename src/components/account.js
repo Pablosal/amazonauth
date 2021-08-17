@@ -5,16 +5,38 @@ export const AccountContext = createContext();
 const Account = (props) => {
   const [logged, setLogged] = useState(false);
   const [user, setUser] = useState({});
+  const [userAttr, setUserAttr] = useState();
   useEffect(() => {
     getSession().then((session) => {
       setLogged(true);
     });
   }, []);
+  const updateAttributes = (attributeList) => {
+    user.updateAttributes(attributeList, function (err, result) {
+      if (err) {
+        alert(err.message || JSON.stringify(err));
+        return;
+      }
+      console.log("call result: " + result);
+    });
+  };
+  const getAttrFromUser = () => {
+    user.getUserAttributes(function (err, result) {
+      if (err) {
+        alert(err.message || JSON.stringify(err));
+        return;
+      }
+      let atrList = {};
+      for (let i = 0; i < result.length; i++) {
+        atrList[result[i].getName()] = result[i].getValue();
+      }
+      setUserAttr(atrList);
+    });
+  };
   const getSession = async () => {
     return await new Promise((res, rej) => {
       const user = Pool.getCurrentUser();
       setUser(user);
-      console.log(user);
       if (user) {
         user.getSession((err, session) => {
           if (err) rej();
@@ -44,7 +66,7 @@ const Account = (props) => {
       },
     });
   };
-  const resetPassword = (code,password) => {
+  const resetPassword = (code, password) => {
     const user = Pool.getCurrentUser();
     user.confirmPassword(code, password, {
       onSuccess: function (data) {
@@ -81,7 +103,17 @@ const Account = (props) => {
   };
   return (
     <AccountContext.Provider
-      value={{ authenticate, getSession, logged, user, recoverPassword,resetPassword }}
+      value={{
+        authenticate,
+        getSession,
+        logged,
+        user,
+        recoverPassword,
+        resetPassword,
+        getAttrFromUser,
+        updateAttributes,
+        userAttr,
+      }}
     >
       {props.children}
     </AccountContext.Provider>
