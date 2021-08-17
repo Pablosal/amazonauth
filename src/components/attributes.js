@@ -1,14 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AccountContext } from "./account";
-const Attributes = () => {
+const Attributes = (props) => {
+  const { userAttr } = useContext(AccountContext);
+
   const { updateAttributes } = useContext(AccountContext);
-  const [name, setName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [region, setRegion] = useState("");
-  const [city, setCity] = useState("");
-  const [commune, setCommune] = useState("");
-  const [address, setAddress] = useState("");
+  const [name, setName] = useState(userAttr["custom:first_name"]);
+  const [lastName, setLastName] = useState(userAttr["custom:last_name"]);
+  const [phone, setPhone] = useState(userAttr["phone_number"]);
+  const [region, setRegion] = useState(userAttr["custom:region"]);
+  const [city, setCity] = useState(userAttr["custom:city"]);
+  const [commune, setCommune] = useState(userAttr["custom:commune"]);
+  const [address, setAddress] = useState(userAttr["address"]);
   const handleform = (e) => {
     e.preventDefault();
     const attrList = [

@@ -26,16 +26,11 @@ const Account = (props) => {
         alert(err.message || JSON.stringify(err));
         return;
       }
-      setUserAttr(result);
-      // for (let i = 0; i < result.length; i++) {
-      //   console.log(result);
-      //   console.log(
-      //     "attribute " +
-      //       result[i].getName() +
-      //       " has value " +
-      //       result[i].getValue()
-      //   );
-      // }
+      let atrList = {};
+      for (let i = 0; i < result.length; i++) {
+        atrList[result[i].getName()] = result[i].getValue();
+      }
+      setUserAttr(atrList);
     });
   };
   const getSession = async () => {
